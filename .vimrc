@@ -1,8 +1,22 @@
-execute pathogen#infect() 
-let mapleader = "," "changed default leader '\'
+"Auto install of vim plug
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+"Auto install my dependencies:
+"Nerdtree & Fuzzysearch atm
+call plug#begin('~/.vim/plugged')
+Plug 'https://github.com/scrooloose/nerdtree' 
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim' 
+call plug#end()
+
+let mapleader = ","
+nmap <leader>w :w!<cr> "Fast save
 
 syntax on
-
 
 set smarttab "be smart on tabs
 set tabstop=2 "set indent size
@@ -27,4 +41,4 @@ augroup numbertoggle
 	autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 augroup END
 
-map <C-n> :NERDTreeToggle<CR>
+map <C-n> :NERDTreeToggle<CR> "map nerdtree toggle to ctrl + n
